@@ -1,7 +1,12 @@
 import React from 'react'
 import { FaStar } from "react-icons/fa";
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../redux/slices/CartSlice';
 
-const FoodCard = ({id, name, price, desc, img, rating}) => {
+const FoodCard = ({ id, name, price, desc, img, rating, handleToast }) => {
+
+const dispatch = useDispatch();
+
     return (
         <div className=' font-bold w-[250px] bg-white p-5 flex flex-col rounded-lg gap-2'>
             <img src={img}
@@ -17,7 +22,9 @@ const FoodCard = ({id, name, price, desc, img, rating}) => {
                 <span className='flex justify-center items-center'>
                     <FaStar className='mr-1 text-yellow-400' /> {rating}
                 </span>
-                <button className='p-1 text-white bg-green-500 hover:bg-gre rounded-lg text-sm '> Add to cart</button>
+                <button onClick={()=>{ dispatch(addToCart({id, name, price, rating, img, qty:1 }));
+                handleToast(name)}} 
+                className='p-1 text-white bg-green-500 hover:bg-gre rounded-lg text-sm '> Add to cart</button>
             </div>
         </div>
     )
